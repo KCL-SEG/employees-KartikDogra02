@@ -1,93 +1,64 @@
 """Employee pay calculator."""
 """ENTER YOUR SOLUTION HERE!"""
 
-from ast import Try 
+from ast import Try
 class Employee:
-    def __init__(self, name,hourly,hourly_rate, no_of_hours, monthly, monthly_rate,commission,no_of_commision,price_of_commission, bonus_commission, price_of_bonus_commission):
+    def __init__(self, name, monthly_salary=0,hourly_rate=0, hours=0, contract_rate=0, no_of_contracts=0, bonus=0):
         self.name = name
-        self.hourly=hourly
+        self.monthly_salary=monthly_salary
         self.hourly_rate=hourly_rate
-        self.no_of_hours=no_of_hours
-        self.monthly=monthly
-        self.monthly_rate=monthly_rate
-        self.commission=commission
-        self.no_of_commission=no_of_commision
-        self.price_of_commission=price_of_commission
-        self.bonus_commission=bonus_commission
-        self.price_of_bonus_commision=price_of_bonus_commission
-        self.pay=None
+        self.hours=hours
+        self.contract_rate=contract_rate
+        self.no_of_contracts=no_of_contracts
+        self.bonus=bonus
         
 
 
     def get_pay(self):
-        if self.monthly==True:
-            if self.getCommission()==True:
-                self.pay=self.getMonthlyRate()+(self.getNumberofCommissions()*self.getPriceOfCommissions())
-            elif self.getBonusCommission():
-                self.pay=self.getMonthlyRate()+self.getPriceOfBonusCommission()
-            else:
-                self.pay=self.getMonthlyRate
-            return self.pay
-        elif self.hourly==True:
-            if self.getCommission()==True:
-                self.pay=(self.getHourlyRate()*self.getNumberOfHours())+(self.getNumberofCommissions()*self.getPriceOfCommissions())
-            elif self.getBonusCommission()==True:
-                self.pay=((self.getHourlyRate()*self.getNumberOfHours())+self.getPriceOfBonusCommission())
-            else:
-                self.pay=(self.getHourlyRate()*self.getNumberOfHours())
-            return self.pay
+        self.pay=self.monthly_salary
+        if self.hours!= 0:
+            self.pay=self.pay+(self.hours*self.hourly_rate)
+        if self.no_of_contracts!=0:
+            self.pay=self.pay(self.no_of_contracts*self.contract_rate)
+        if self.bonus!=0:
+            self.pay=self.pay+self.bonus
+        return self.pay
 
     def __str__(self):
-        if self.hourly==True:
-            if self.commission==True:
-                return f"{self.name} works on a contract of {self.no_of_hours} hours at {self.hourly_rate}/hour and receives a commission for {self.no_of_commission} contract(s) at {self.price_of_commission}/contract.  Their total pay is {self.get_pay()}."
-            elif self.bonus_commission==True:
-                return f"{self.name} works on a contract of {self.no_of_hours} hours at {self.hourly_rate}/hour receives a bonus commission of {self.price_of_bonus_commision}.  Their total pay is {self.get_pay()}."
+        if self.hours!=0:
+            if self.no_of_contracts!=0:
+                return f"{self.name} works on a contract of {self.hours} hours at {self.hourly_rate}/hours and recived a commission for {self.no_of_contracts} contract(s) at {self.contract_rate}/contract.  Thier total pay is {self.get_pay()}"
+            if self.bonus!=0:
+                return f"{self.name} works on a contract of {self.hours} hours at {self.hourly_rate}/hours and receives a bonus commission of {self.no_of_contracts} contract(s) at {self.bonus}.  Thier total pay is {self.get_pay()}"
             else:
-                return f"{self.name} works on a contract of {self.no_of_hours} hours at {self.hourly_rate}/hour. Their total pay is {self.get_pay()}."
-        else:
-            if self.commission==True:
-                return f"{self.name} works on a monthly salary of {self.monthly_rate} and receives a commission for {self.no_of_commission} contract(s) at {self.price_of_commission}/contract.  Their total pay is {self.get_pay()}."
-            elif self.bonus_commission==True:
-                return f"{self.name} works on a monthly salary of {self.monthly_rate} receives a bonus commission of {self.price_of_bonus_commision}.  Their total pay is {self.get_pay()}."
+                return f"{self.name} works on a contract of {self.hours} hours at {self.hourly_rate}/hours.  Their total pay is {self.get_pay()}."
+        if self.monthly_salary!=0:
+            if self.no_of_contracts!=0:
+                return f"{self.name} works on a monthly salary {self.monthly_salary} and recived a commission for {self.no_of_contracts} contract(s) at {self.contract_rate}/contract.  Thier total pay is {self.get_pay()}"
+            if self.bonus!=0:
+                return f"{self.name} works on a monthly salary {self.monthly_salary} and receives a bonus commission of {self.no_of_contracts} contract(s) at {self.bonus}.  Thier total pay is {self.get_pay()}"
             else:
-                return f"{self.name} work on a monthly salary of {self.hourly_rate} hours.  Their total pay is {self.get_pay()}."
-    def getHourlyRate(self):
-        return self.hourly_rate
-    def getNumberOfHours(self):
-        return self.no_of_hours
-    def getMonthlyRate(self):
-        return self.monthly_rate
-    def getNumberofCommissions(self):
-        return self.no_of_commission
-    def getPriceOfCommissions(self):
-        return self.price_of_commission
-    def getPriceOfBonusCommission(self):
-        return self.price_of_bonus_commision
-    def getBonusCommission(self):
-        return self.bonus_commission
-    def getCommission(self):
-        return self.commission
+                return f"{self.name} works on a monthly salary {self.monthly_salary}.  Their total pay is {self.get_pay()}."
+
 
 
         
 
 
 # Billie works on a monthly salary of 4000.  Their total pay is 4000.
-billie = Employee('Billie',False,0,0,True,4000,False,0,0,False,0)
+billie = Employee('Billie', monthly_salary=4000)
 
 # Charlie works on a contract of 100 hours at 25/hour.  Their total pay is 2500.
-charlie = Employee('Charlie',True,25,100,False,0,False,0,0,False,0)
+charlie = Employee('Charlie', hours=100, hourly_rate=25)
 
 # Renee works on a monthly salary of 3000 and receives a commission for 4 contract(s) at 200/contract.  Their total pay is 3800.
-renee = Employee('Renee',False,0,0,True,3000,True,4,200,False,0)
+renee = Employee('Renee', monthly_salary=3000, no_of_contracts=4,contract_rate=200)
 
 # Jan works on a contract of 150 hours at 25/hour and receives a commission for 3 contract(s) at 220/contract.  Their total pay is 4410.
-jan = Employee('Jan',True,25,150,False,0,True,3,220,False,0)
+jan = Employee('Jan', hours=150, hourly_rate=25, no_of_contracts=3,contract_rate=220)
 
 # Robbie works on a monthly salary of 2000 and receives a bonus commission of 1500.  Their total pay is 3500.
-robbie = Employee('Robbie',False,0,0,True,2000,False,0,0,True,1500)
+robbie = Employee('Robbie', monthly_salary=2000, bonus=1500)
 
 # Ariel works on a contract of 120 hours at 30/hour and receives a bonus commission of 600.  Their total pay is 4200.
-ariel = Employee('Ariel',True,30,120,False,0,False,0,0,True,600)
-
+ariel = Employee('Ariel', hours=120, hourly_rate=30, bonus=600)
